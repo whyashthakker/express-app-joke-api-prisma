@@ -1,0 +1,15 @@
+{
+  "name": "express-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run server.ts",
+    "setup": "bun setup-db.ts && prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0",
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1",
+    "prisma": "5.22.0"
+  }
+}
