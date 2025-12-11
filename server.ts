@@ -27,8 +27,8 @@ app.use((req: Request, res: Response, next) => {
   const startTime = Date.now();
   
   // Override res.end to log response
-  const originalEnd = res.end;
-  res.end = function(...args) {
+  const originalEnd = res.end.bind(res);
+  res.end = function(...args: any[]) {
     const responseTime = Date.now() - startTime;
     const statusCode = res.statusCode;
     const statusColor = statusCode >= 200 && statusCode < 300 ? '\x1b[32m' : 
@@ -36,8 +36,8 @@ app.use((req: Request, res: Response, next) => {
     
     console.log(`[${timestamp}] ${method} ${url} - ${statusColor}${statusCode}\x1b[0m - ${responseTime}ms`);
     
-    // Call original end
-    originalEnd.apply(this, args);
+    // Call original end and return the result
+    return originalEnd.apply(res, args);
   };
   
   next();
