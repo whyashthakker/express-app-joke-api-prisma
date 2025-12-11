@@ -266,6 +266,11 @@ app.get("/docs", (req: Request, res: Response) => {
 
 // Root route
 app.get("/", (req: Request, res: Response) => {
+  res.sendFile(path.join(process.cwd(), "public", "index.html"));
+});
+
+// API info route (for JSON endpoint info)
+app.get("/api", (req: Request, res: Response) => {
   res.json({
     message: "Welcome to the Jokes API!",
     endpoints: {

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Jokes API - Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .features {
+            margin-bottom: 50px;
+        }
+
+        .features h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .features ul {
+            list-style: none;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .features li {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        .features li::before {
+            content: "✨ ";
+            margin-right: 8px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .nav-button:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .nav-button .icon {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .nav-button .label {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .nav-button .description {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.7;
+        }
+
+        .footer p {
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .api-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .api-info h4 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .endpoint {
+            font-family: 'Monaco', 'Consolas', monospace;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.95rem;
+            border-left: 3px solid #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                font-size: 4rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-button {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .nav-button {
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎭</div>
+        <h1 class="title">Jokes API</h1>
+        <p class="subtitle">
+            Welcome to the Real-Time Jokes API!<br>
+            Share laughs and watch jokes appear live with our beautiful interface.
+        </p>
+
+        <div class="features">
+            <h3>🚀 What's Available</h3>
+            <ul>
+                <li>Real-time joke updates</li>
+                <li>Beautiful live viewer interface</li>
+                <li>Comprehensive API documentation</li>
+                <li>Filter jokes by author</li>
+                <li>Advanced authentication support</li>
+            </ul>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="/view" class="nav-button">
+                <span class="icon">👁️</span>
+                <span class="label">Live View</span>
+                <span class="description">Watch jokes in real-time</span>
+            </a>
+            
+            <a href="/docs" class="nav-button">
+                <span class="icon">📚</span>
+                <span class="label">API Docs</span>
+                <span class="description">Complete documentation</span>
+            </a>
+        </div>
+
+        <div class="api-info">
+            <h4>🔗 Quick API Access</h4>
+            <div class="endpoint">GET /jokes - Get all jokes</div>
+            <div class="endpoint">POST /advanced-joke - Create with auth</div>
+            <div class="endpoint">GET /events - Real-time updates (SSE)</div>
+        </div>
+
+        <div class="footer">
+            <p>Built with ❤️ using Express.js, Bun, Prisma & PostgreSQL</p>
+            <p>Ready to share some laughs? <a href="/view">Start watching jokes →</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect to features
+            const features = document.querySelectorAll('.features li');
+            features.forEach((feature, index) => {
+                feature.style.animationDelay = `${index * 0.1}s`;
+                feature.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+
+            // Add click tracking for buttons
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const label = this.querySelector('.label').textContent;
+                    console.log(`Navigating to: ${label}`);
+                });
+            });
+        });
+
+        // Add fadeInUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
