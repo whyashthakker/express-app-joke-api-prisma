@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Jokes Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .status {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .status.connected {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .status.disconnected {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+
+        .jokes-container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .jokes-header {
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .jokes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .joke-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .joke-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .joke-author {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .joke-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .joke-setup {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .joke-punchline {
+            font-size: 1.1em;
+            color: #555;
+            font-style: italic;
+            padding-left: 15px;
+            border-left: 3px solid #667eea;
+        }
+
+        .new-joke {
+            border-left: 5px solid #4CAF50;
+            animation: newJokeGlow 2s ease;
+        }
+
+        @keyframes newJokeGlow {
+            0% { box-shadow: 0 0 0 rgba(76, 175, 80, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); }
+            100% { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        }
+
+        .empty-state {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .jokes-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Live Jokes Feed</h1>
+            <p>Watch jokes appear in real-time as they're submitted!</p>
+        </div>
+
+        <div id="connectionStatus" class="status disconnected">
+            🔴 Connecting to live feed...
+        </div>
+
+
+        <div class="jokes-container">
+            <h2 class="jokes-header">Latest Jokes</h2>
+            <div id="jokesList" class="jokes-list">
+                <div class="empty-state">
+                    <h3>No jokes available!</h3>
+                    <p>Check back later for new jokes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        const jokesList = document.getElementById('jokesList');
+        const connectionStatus = document.getElementById('connectionStatus');
+
+        // Connect to SSE
+        function connectToEventStream() {
+            eventSource = new EventSource('/events');
+
+            eventSource.onopen = function(event) {
+                connectionStatus.textContent = '🟢 Connected to live feed!';
+                connectionStatus.className = 'status connected';
+            };
+
+            eventSource.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.type !== 'heartbeat') {
+                        addNewJoke(data);
+                    }
+                } catch (error) {
+                    console.error('Error parsing SSE data:', error);
+                }
+            };
+
+            eventSource.onerror = function(event) {
+                connectionStatus.textContent = '🔴 Connection lost. Reconnecting...';
+                connectionStatus.className = 'status disconnected';
+                
+                // Reconnect after a delay
+                setTimeout(() => {
+                    eventSource.close();
+                    connectToEventStream();
+                }, 3000);
+            };
+        }
+
+        // Add new joke to the list
+        function addNewJoke(joke) {
+            // Remove empty state if it exists
+            const emptyState = document.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            const jokeElement = document.createElement('div');
+            jokeElement.className = 'joke-card new-joke';
+            
+            const jokeTime = new Date(joke.createdAt).toLocaleString();
+            
+            jokeElement.innerHTML = `
+                <div class="joke-meta">
+                    <div class="joke-author">👤 ${escapeHtml(joke.name)}</div>
+                    <div class="joke-time">${jokeTime}</div>
+                </div>
+                <div class="joke-setup">${escapeHtml(joke.setup)}</div>
+                <div class="joke-punchline">${escapeHtml(joke.punchline)}</div>
+            `;
+
+            // Add to beginning of list
+            jokesList.insertBefore(jokeElement, jokesList.firstChild);
+
+            // Remove the new-joke class after animation
+            setTimeout(() => {
+                jokeElement.classList.remove('new-joke');
+            }, 2000);
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+
+        // Load existing jokes when page loads
+        async function loadExistingJokes() {
+            try {
+                const response = await fetch('/jokes');
+                if (response.ok) {
+                    const jokes = await response.json();
+                    if (jokes.length > 0) {
+                        // Remove empty state
+                        const emptyState = document.querySelector('.empty-state');
+                        if (emptyState) {
+                            emptyState.remove();
+                        }
+                        
+                        // Add jokes (they're already sorted by createdAt desc)
+                        jokes.forEach(joke => {
+                            const jokeElement = document.createElement('div');
+                            jokeElement.className = 'joke-card';
+                            
+                            const jokeTime = new Date(joke.createdAt).toLocaleString();
+                            
+                            jokeElement.innerHTML = `
+                                <div class="joke-meta">
+                                    <div class="joke-author">👤 ${escapeHtml(joke.name)}</div>
+                                    <div class="joke-time">${jokeTime}</div>
+                                </div>
+                                <div class="joke-setup">${escapeHtml(joke.setup)}</div>
+                                <div class="joke-punchline">${escapeHtml(joke.punchline)}</div>
+                            `;
+                            
+                            jokesList.appendChild(jokeElement);
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading existing jokes:', error);
+            }
+        }
+
+        // Initialize
+        loadExistingJokes();
+        connectToEventStream();
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>

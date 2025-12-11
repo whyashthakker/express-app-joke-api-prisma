@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokes API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .docs-content {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #555;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        .method.get { background: #28a745; }
+        .method.post { background: #007bff; }
+        .method.put { background: #ffc107; color: #000; }
+        .method.delete { background: #dc3545; }
+
+        .url {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .description {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Consolas', monospace;
+            margin: 15px 0;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .parameter {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .parameter strong {
+            color: #856404;
+        }
+
+        .response-example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .auth-note {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #721c24;
+        }
+
+        .toc {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .toc h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .docs-content {
+                padding: 20px;
+            }
+            
+            .nav-links a {
+                display: block;
+                margin: 10px auto;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Jokes API Documentation</h1>
+            <p>Complete guide to the Real-Time Jokes API</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/view">👁️ Live View</a>
+            <a href="https://github.com/yourusername/jokes-api" target="_blank">📚 GitHub</a>
+        </div>
+
+        <div class="docs-content">
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#authentication">Authentication</a></li>
+                    <li><a href="#endpoints">API Endpoints</a>
+                        <ul>
+                            <li><a href="#get-jokes">Get Jokes</a></li>
+                            <li><a href="#get-joke">Get Single Joke</a></li>
+                            <li><a href="#create-joke">Create Joke</a></li>
+                            <li><a href="#create-advanced-joke">Create Joke (Advanced)</a></li>
+                            <li><a href="#update-joke">Update Joke</a></li>
+                            <li><a href="#delete-joke">Delete Joke</a></li>
+                            <li><a href="#random-joke">Random Joke</a></li>
+                            <li><a href="#real-time">Real-time Updates</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#examples">Usage Examples</a></li>
+                    <li><a href="#errors">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="section" id="overview">
+                <h2>🚀 Overview</h2>
+                <p>The Jokes API is a RESTful web service that allows you to manage and share jokes with real-time updates. Built with Express.js, Prisma, and PostgreSQL, it features Server-Sent Events for live updates and a beautiful web interface.</p>
+                
+                <h3>Base URL</h3>
+                <div class="code-block">
+                    <pre>http://localhost:8080</pre>
+                </div>
+
+                <h3>Features</h3>
+                <ul>
+                    <li>✅ Full CRUD operations for jokes</li>
+                    <li>✅ Real-time updates via Server-Sent Events</li>
+                    <li>✅ Live web interface</li>
+                    <li>✅ Filter jokes by author name</li>
+                    <li>✅ Advanced authentication for secure operations</li>
+                    <li>✅ Random joke endpoint</li>
+                    <li>✅ Comprehensive error handling</li>
+                </ul>
+            </div>
+
+            <div class="section" id="authentication">
+                <h2>🔐 Authentication</h2>
+                <p>The API supports two levels of access:</p>
+                <ul>
+                    <li><strong>Basic Access:</strong> No authentication required for most read operations</li>
+                    <li><strong>Advanced Access:</strong> Requires <code>auth-key</code> header for secure write operations</li>
+                </ul>
+
+                <div class="auth-note">
+                    <strong>🔒 Advanced Endpoints:</strong> Some endpoints require an <code>auth-key</code> header. Set your secret key in the <code>ADVANCED_AUTH_KEY</code> environment variable.
+                </div>
+            </div>
+
+            <div class="section" id="endpoints">
+                <h2>📚 API Endpoints</h2>
+
+                <div class="endpoint" id="get-jokes">
+                    <h3><span class="method get">GET</span><span class="url">/jokes</span></h3>
+                    <div class="description">Retrieve all jokes, optionally filtered by author name. Results are ordered by creation date (newest first).</div>
+                    
+                    <h4>Query Parameters</h4>
+                    <div class="parameter">
+                        <strong>name</strong> (optional) - Filter jokes by author name (case-insensitive partial match)
+                    </div>
+
+                    <h4>Examples</h4>
+                    <div class="code-block">
+                        <pre>GET /jokes
+GET /jokes?name=Alice
+GET /jokes?name=john</pre>
+                    </div>
+
+                    <h4>Response</h4>
+                    <div class="response-example">
+                        <div class="code-block">
+                            <pre>[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "setup": "Why did the scarecrow win an award?",
+    "punchline": "Because he was outstanding in his field!",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z"
+  }
+]</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="get-joke">
+                    <h3><span class="method get">GET</span><span class="url">/jokes/:id</span></h3>
+                    <div class="description">Retrieve a specific joke by its ID.</div>
+                    
+                    <h4>Parameters</h4>
+                    <div class="parameter">
+                        <strong>id</strong> (required) - The unique identifier of the joke
+                    </div>
+
+                    <h4>Example</h4>
+                    <div class="code-block">
+                        <pre>GET /jokes/1</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="create-joke">
+                    <h3><span class="method post">POST</span><span class="url">/jokes</span></h3>
+                    <div class="description">Create a new joke. The joke will appear in real-time on the live view page.</div>
+                    
+                    <h4>Request Body</h4>
+                    <div class="code-block">
+                        <pre>{
+  "name": "John Doe",
+  "setup": "Why did the chicken cross the road?",
+  "punchline": "To get to the other side!"
+}</pre>
+                    </div>
+
+                    <div class="parameter">
+                        <strong>name</strong> (required) - Author's name<br>
+                        <strong>setup</strong> (required) - The joke setup<br>
+                        <strong>punchline</strong> (required) - The joke punchline
+                    </div>
+                </div>
+
+                <div class="endpoint" id="create-advanced-joke">
+                    <h3><span class="method post">POST</span><span class="url">/advanced-joke</span></h3>
+                    <div class="description">Create a new joke with advanced authentication. Requires auth-key header.</div>
+                    
+                    <div class="auth-note">
+                        <strong>🔒 Authentication Required:</strong> This endpoint requires the <code>auth-key</code> header.
+                    </div>
+
+                    <h4>Headers</h4>
+                    <div class="code-block">
+                        <pre>Content-Type: application/json
+auth-key: your-secret-auth-key-here</pre>
+                    </div>
+
+                    <h4>Request Body</h4>
+                    <div class="code-block">
+                        <pre>{
+  "name": "Jane Smith",
+  "setup": "Why do programmers prefer dark mode?",
+  "punchline": "Because light attracts bugs!"
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="update-joke">
+                    <h3><span class="method put">PUT</span><span class="url">/jokes/:id</span></h3>
+                    <div class="description">Update an existing joke. All fields are optional.</div>
+                    
+                    <h4>Request Body</h4>
+                    <div class="code-block">
+                        <pre>{
+  "name": "Updated Author",
+  "setup": "Updated setup",
+  "punchline": "Updated punchline"
+}</pre>
+                    </div>
+                </div>
+
+                <div class="endpoint" id="delete-joke">
+                    <h3><span class="method delete">DELETE</span><span class="url">/jokes/:id</span></h3>
+                    <div class="description">Delete a joke by its ID.</div>
+                    
+                    <h4>Response</h4>
+                    <div class="response-example">
+                        Returns <strong>204 No Content</strong> on success.
+                    </div>
+                </div>
+
+                <div class="endpoint" id="random-joke">
+                    <h3><span class="method get">GET</span><span class="url">/jokes/random/one</span></h3>
+                    <div class="description">Get a random joke from the database.</div>
+                </div>
+
+                <div class="endpoint" id="real-time">
+                    <h3><span class="method get">GET</span><span class="url">/events</span></h3>
+                    <div class="description">Server-Sent Events endpoint for real-time joke updates. Connect to this endpoint to receive live updates when new jokes are added.</div>
+                    
+                    <h4>Usage with JavaScript</h4>
+                    <div class="code-block">
+                        <pre>const eventSource = new EventSource('/events');
+eventSource.onmessage = function(event) {
+  const joke = JSON.parse(event.data);
+  console.log('New joke:', joke);
+};</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="examples">
+                <h2>💡 Usage Examples</h2>
+
+                <h3>Using cURL</h3>
+                <div class="code-block">
+                    <pre># Get all jokes
+curl http://localhost:8080/jokes
+
+# Get jokes by author
+curl "http://localhost:8080/jokes?name=Alice"
+
+# Create a new joke
+curl -X POST http://localhost:8080/jokes \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Comedy Central",
+    "setup": "Why do programmers prefer dark mode?",
+    "punchline": "Because light attracts bugs!"
+  }'
+
+# Create joke with auth (advanced)
+curl -X POST http://localhost:8080/advanced-joke \
+  -H "Content-Type: application/json" \
+  -H "auth-key: your-secret-key" \
+  -d '{
+    "name": "Secure User",
+    "setup": "What do you call a bear with no teeth?",
+    "punchline": "A gummy bear!"
+  }'</pre>
+                </div>
+
+                <h3>Using JavaScript/TypeScript</h3>
+                <div class="code-block">
+                    <pre>// Get all jokes
+const jokes = await fetch('/jokes').then(r => r.json());
+
+// Get jokes by author
+const aliceJokes = await fetch('/jokes?name=Alice').then(r => r.json());
+
+// Create a new joke
+const newJoke = await fetch('/jokes', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    name: 'JavaScript Developer',
+    setup: 'Why do JavaScript developers wear glasses?',
+    punchline: 'Because they cannot C#!'
+  })
+}).then(r => r.json());
+
+// Real-time updates
+const eventSource = new EventSource('/events');
+eventSource.onmessage = (event) => {
+  const newJoke = JSON.parse(event.data);
+  if (newJoke.type !== 'heartbeat') {
+    console.log('New joke added:', newJoke);
+  }
+};</pre>
+                </div>
+            </div>
+
+            <div class="section" id="errors">
+                <h2>⚠️ Error Handling</h2>
+                <p>The API returns standard HTTP status codes and JSON error responses:</p>
+
+                <div class="code-block">
+                    <pre>// 400 Bad Request - Missing required fields
+{
+  "error": "Setup, punchline, and name are required"
+}
+
+// 401 Unauthorized - Invalid auth key
+{
+  "error": "Unauthorized: Invalid or missing auth-key"
+}
+
+// 404 Not Found - Joke not found
+{
+  "error": "Joke not found"
+}
+
+// 500 Internal Server Error
+{
+  "error": "Failed to create joke"
+}</pre>
+                </div>
+
+                <h3>HTTP Status Codes</h3>
+                <ul>
+                    <li><strong>200 OK</strong> - Request successful</li>
+                    <li><strong>201 Created</strong> - Resource created successfully</li>
+                    <li><strong>204 No Content</strong> - Resource deleted successfully</li>
+                    <li><strong>400 Bad Request</strong> - Invalid request data</li>
+                    <li><strong>401 Unauthorized</strong> - Authentication required or failed</li>
+                    <li><strong>404 Not Found</strong> - Resource not found</li>
+                    <li><strong>500 Internal Server Error</strong> - Server error</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0; color: #666;">
+                <p>Made with ❤️ using Express.js, Bun, and Prisma</p>
+                <p><a href="/view" style="color: #667eea; text-decoration: none;">🎭 Try the Live View →</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
