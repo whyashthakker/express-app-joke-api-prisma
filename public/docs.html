@@ -263,7 +263,7 @@
                 
                 <h3>Base URL</h3>
                 <div class="code-block">
-                    <pre>http://localhost:8080</pre>
+                    <pre>https://express-app-joke-api-prisma-production.up.railway.app</pre>
                 </div>
 
                 <h3>Features</h3>
@@ -436,13 +436,13 @@ eventSource.onmessage = function(event) {
                 <h3>Using cURL</h3>
                 <div class="code-block">
                     <pre># Get all jokes
-curl http://localhost:8080/jokes
+curl https://express-app-joke-api-prisma-production.up.railway.app/jokes
 
 # Get jokes by author
-curl "http://localhost:8080/jokes?name=Alice"
+curl "https://express-app-joke-api-prisma-production.up.railway.app/jokes?name=Alice"
 
 # Create a new joke
-curl -X POST http://localhost:8080/jokes \
+curl -X POST https://express-app-joke-api-prisma-production.up.railway.app/jokes \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Comedy Central",
@@ -451,7 +451,7 @@ curl -X POST http://localhost:8080/jokes \
   }'
 
 # Create joke with auth (advanced)
-curl -X POST http://localhost:8080/advanced-joke \
+curl -X POST https://express-app-joke-api-prisma-production.up.railway.app/advanced-joke \
   -H "Content-Type: application/json" \
   -H "auth-key: your-secret-key" \
   -d '{
