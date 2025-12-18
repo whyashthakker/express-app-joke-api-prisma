@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Price Lottery API - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .nav-home {
+            display: inline-block;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-home:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #ffed4e;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .endpoint {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+
+        .method.get { background: #28a745; color: white; }
+        .method.post { background: #007bff; color: white; }
+
+        .url {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .description {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid rgba(72, 187, 120, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 3px solid #ffd700;
+        }
+
+        .step-number {
+            background: #ffd700;
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .rules-list li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+        }
+
+        .demo-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .demo-button {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+
+        .demo-result {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎰</div>
+            <h1 class="title">Price Lottery API</h1>
+            <p class="subtitle">Win the competition by getting price = 1 and solving math challenges!</p>
+            <a href="/" class="nav-home">🏠 Back to Home</a>
+        </div>
+
+        <!-- Game Overview -->
+        <div class="section">
+            <h2>🎯 Game Overview</h2>
+            <p>The Price Lottery is a competitive game where players try to win by:</p>
+            
+            <div class="flow-step">
+                <div class="step-number">1</div>
+                <div>Call <code>GET /prices</code> repeatedly until you get <span class="highlight">price = 1</span></div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="step-number">2</div>
+                <div>Receive a <span class="highlight">math challenge</span> that you must solve within 60 seconds</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="step-number">3</div>
+                <div>Submit your answer via <code>POST /prices/solve</code></div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="step-number">4</div>
+                <div><span class="highlight">Win</span> if your answer is correct and get announced on Discord!</div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Rate Limiting:</strong> Maximum 1 request per second to /prices. Exceeding this will silence you for 10 seconds!
+            </div>
+        </div>
+
+        <!-- API Endpoints -->
+        <div class="section">
+            <h2>🔗 API Endpoints</h2>
+            
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="url">/prices</span>
+                </div>
+                <div class="description">Get a random price between 1-100. Price = 1 triggers a math challenge.</div>
+                
+                <h3>Response (Normal):</h3>
+                <div class="code-block">{
+  "price": 47,
+  "timestamp": "2023-12-18T10:30:00Z",
+  "lottery": {
+    "isWinner": false,
+    "winningNumber": 1,
+    "probability": "1%",
+    "odds": "1 in 100"
+  },
+  "rateLimit": {
+    "remainingRequests": 0,
+    "resetIn": "1 second"
+  }
+}</div>
+
+                <h3>Response (Jackpot - Price = 1):</h3>
+                <div class="code-block">{
+  "price": 1,
+  "lottery": { "isWinner": true },
+  "challenge": {
+    "status": "JACKPOT! You got price = 1!",
+    "challengeId": "challenge_1703123456_abc123",
+    "question": "What is 127 + 394?",
+    "timeLimit": "60 seconds",
+    "expiresAt": "2023-12-18T10:31:00Z",
+    "instructions": "POST /prices/docs/solve with answer",
+    "warning": "You have 60 seconds to solve this!"
+  }
+}</div>
+            </div>
+
+            <div class="endpoint">
+                <div>
+                    <span class="method post">POST</span>
+                    <span class="url">/prices/solve</span>
+                </div>
+                <div class="description">Submit your answer to the math challenge within 60 seconds.</div>
+                
+                <h3>Request Body:</h3>
+                <div class="code-block">{
+  "challengeId": "challenge_1703123456_abc123",
+  "answer": 521,
+  "winner": "YourName"
+}</div>
+
+                <h3>Response (Success):</h3>
+                <div class="code-block">{
+  "success": true,
+  "winner": "YourName",
+  "message": "🎉 CONGRATULATIONS! YourName won the price lottery!",
+  "challenge": {
+    "question": "What is 127 + 394?",
+    "correctAnswer": 521,
+    "yourAnswer": 521,
+    "solveTime": "3 seconds"
+  },
+  "achievement": "You beat the odds and solved the math problem!",
+  "announcement": "Winner announced on Discord and live feeds!"
+}</div>
+            </div>
+        </div>
+
+        <!-- Rules & Strategy -->
+        <div class="section">
+            <h2>📋 Rules & Constraints</h2>
+            
+            <ul class="rules-list">
+                <li><strong>Rate Limit:</strong> Maximum 1 request per second to /prices</li>
+                <li><strong>Silence Penalty:</strong> Exceeding 1 RPS results in 10-second silence</li>
+                <li><strong>Time Limit:</strong> 60 seconds to solve math challenges</li>
+                <li><strong>IP Security:</strong> Only the original requester can solve their challenge</li>
+                <li><strong>One Shot:</strong> Each challenge can only be attempted once</li>
+                <li><strong>Math Types:</strong> Addition, subtraction, and multiplication problems</li>
+            </ul>
+
+            <h3>🧮 Math Challenge Examples:</h3>
+            <div class="code-block">Easy: What is 42 + 17?
+Medium: What is 156 - 89?
+Hard: What is 23 * 18?</div>
+
+            <h3>🎯 Winning Strategy:</h3>
+            <div class="success">
+                <strong>💡 Pro Tips:</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Time your requests to exactly 1 second apart</li>
+                    <li>Be ready to solve math quickly when you hit price = 1</li>
+                    <li>Use a script/bot for consistent timing</li>
+                    <li>Practice mental math for speed</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Live Demo -->
+        <div class="section">
+            <h2>🚀 Live Demo</h2>
+            <p>Try the API right from this page! (Respects rate limiting)</p>
+            
+            <div class="demo-section">
+                <button class="demo-button" onclick="tryLottery()">🎲 Try Your Luck</button>
+                <button class="demo-button" onclick="clearResults()">🗑️ Clear Results</button>
+                
+                <div id="demoResult" class="demo-result"></div>
+                
+                <div id="challengeSection" style="display: none; margin-top: 20px;">
+                    <h3 style="color: #ffd700;">🧮 Math Challenge!</h3>
+                    <input type="number" id="answerInput" placeholder="Enter your answer" style="padding: 8px; margin: 10px 0; border-radius: 4px; border: none;">
+                    <button class="demo-button" onclick="submitAnswer()">✅ Submit Answer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="section">
+            <h2>🏆 Competition Info</h2>
+            <p>This is a live competition! Everyone is trying to win by hitting price = 1 and solving the math challenge fastest.</p>
+            
+            <div class="success">
+                <strong>🎊 Winners get:</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Discord announcement with your name</li>
+                    <li>Real-time broadcast to all live viewers</li>
+                    <li>Bragging rights for beating the competition!</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 20px; text-align: center; opacity: 0.8;">
+                Good luck, and may the fastest solver win! 🎰✨
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentChallenge = null;
+        let lastRequestTime = 0;
+
+        function log(message, isError = false) {
+            const resultDiv = document.getElementById('demoResult');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = isError ? 'error' : 'success';
+            resultDiv.innerHTML += `<div style="color: ${isError ? '#ff6b6b' : '#51cf66'};">[${timestamp}] ${message}</div>`;
+            resultDiv.style.display = 'block';
+            resultDiv.scrollTop = resultDiv.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('demoResult').innerHTML = '';
+            document.getElementById('demoResult').style.display = 'none';
+            document.getElementById('challengeSection').style.display = 'none';
+            currentChallenge = null;
+        }
+
+        async function tryLottery() {
+            // Rate limiting check
+            const now = Date.now();
+            if (now - lastRequestTime < 1000) {
+                log('⏸️ Please wait - respecting 1 RPS limit', true);
+                return;
+            }
+            lastRequestTime = now;
+
+            try {
+                log('🎲 Rolling the dice...');
+                const response = await fetch('/prices');
+                const data = await response.json();
+
+                if (response.status === 429) {
+                    log(`⏸️ Rate limited: ${data.message}`, true);
+                    return;
+                }
+
+                if (data.price) {
+                    log(`🎯 Got price: ${data.price}`);
+                    
+                    if (data.challenge) {
+                        log('🎰 JACKPOT! Price = 1! Math challenge received!');
+                        log(`🧮 Question: ${data.challenge.question}`);
+                        log(`⏰ Time limit: ${data.challenge.timeLimit}`);
+                        
+                        currentChallenge = data.challenge;
+                        document.getElementById('challengeSection').style.display = 'block';
+                        document.getElementById('answerInput').focus();
+                    } else {
+                        log('😐 Not a winner this time. Try again!');
+                    }
+                }
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        async function submitAnswer() {
+            if (!currentChallenge) {
+                log('❌ No active challenge', true);
+                return;
+            }
+
+            const answer = parseInt(document.getElementById('answerInput').value);
+            if (isNaN(answer)) {
+                log('❌ Please enter a valid number', true);
+                return;
+            }
+
+            try {
+                log(`🚀 Submitting answer: ${answer}`);
+                
+                const response = await fetch('/prices/solve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        challengeId: currentChallenge.challengeId,
+                        answer: answer,
+                        winner: 'WebDemo'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    log('🎉 WINNER! You solved it correctly!');
+                    log(`⚡ Solve time: ${data.challenge.solveTime}`);
+                    log('🎊 Check Discord for your announcement!');
+                    document.getElementById('challengeSection').style.display = 'none';
+                } else {
+                    log(`❌ ${data.error || 'Wrong answer!'}`, true);
+                    if (data.yourAnswer) {
+                        log(`💭 Your answer: ${data.yourAnswer}`, true);
+                    }
+                }
+
+                currentChallenge = null;
+                document.getElementById('answerInput').value = '';
+
+            } catch (error) {
+                log(`❌ Submit error: ${error.message}`, true);
+            }
+        }
+
+        // Allow Enter key to submit answer
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && currentChallenge) {
+                submitAnswer();
+            }
+        });
+    </script>
+</body>
+</html>

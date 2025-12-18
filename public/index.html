@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎭 Jokes API - Welcome</title>
+    <title>🚀 Multi-API Platform - Your Development Hub</title>
     <style>
         * {
             margin: 0;
@@ -13,123 +13,212 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            position: relative;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
         }
 
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 900px;
             padding: 40px;
+            position: relative;
+            z-index: 2;
         }
 
         .logo {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: pulse 3s infinite;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-20px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .title {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #ffd700, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
         }
 
         .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
             font-size: 1.3rem;
-            margin-bottom: 40px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .feature-description {
+            font-size: 1rem;
             opacity: 0.9;
             line-height: 1.5;
         }
 
-        .features {
-            margin-bottom: 50px;
-        }
-
-        .features h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #ffd700;
-        }
-
-        .features ul {
-            list-style: none;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .features li {
-            margin: 8px 0;
-            opacity: 0.9;
-        }
-
-        .features li::before {
-            content: "✨ ";
-            margin-right: 8px;
-        }
-
         .nav-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
         }
 
         .nav-button {
-            display: inline-block;
-            padding: 20px 40px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 25px;
+            display: block;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
             color: white;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            transition: all 0.3s ease;
-            min-width: 200px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
         }
 
         .nav-button:hover {
-            background: rgba(255,255,255,0.25);
-            border-color: rgba(255,255,255,0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
 
         .nav-button .icon {
             display: block;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
 
         .nav-button .label {
             display: block;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .nav-button .description {
             display: block;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
+            font-size: 0.95rem;
+            opacity: 0.85;
+            line-height: 1.4;
         }
 
         .footer {
@@ -153,28 +242,67 @@
             text-decoration: underline;
         }
 
-        .api-info {
+        .stats-section {
             background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 40px 0;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px auto;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 800px;
         }
 
-        .api-info h4 {
+        .stats-title {
             color: #ffd700;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .endpoint {
             font-family: 'Monaco', 'Consolas', monospace;
-            background: rgba(0,0,0,0.2);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 0.95rem;
-            border-left: 3px solid #ffd700;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 1rem;
+            border-left: 4px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint:hover {
+            background: rgba(0,0,0,0.4);
+            transform: translateX(10px);
         }
 
         @media (max-width: 768px) {
@@ -217,92 +345,194 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🎭</div>
-        <h1 class="title">Jokes API</h1>
-        <p class="subtitle">
-            Welcome to the Real-Time Jokes API!<br>
-            Share laughs and watch jokes appear live with our beautiful interface.
-        </p>
+    <div class="floating-shapes">
+        <div class="shape">🚀</div>
+        <div class="shape">⚡</div>
+        <div class="shape">🎯</div>
+    </div>
 
-        <div class="features">
-            <h3>🚀 What's Available</h3>
-            <ul>
-                <li>Real-time joke updates</li>
-                <li>Beautiful live viewer interface</li>
-                <li>Comprehensive API documentation</li>
-                <li>Filter jokes by author</li>
-                <li>Advanced authentication support</li>
-            </ul>
-        </div>
+    <div class="hero-section">
+        <div class="container">
+            <div class="logo">🚀</div>
+            <h1 class="title">Multi-API Platform</h1>
+            <p class="subtitle">
+                Your comprehensive development hub featuring multiple REST APIs for learning, testing, and building amazing applications. From jokes to user management, products to weather data - everything you need in one place.
+            </p>
 
-        <div class="nav-buttons">
-            <a href="/view" class="nav-button">
-                <span class="icon">👁️</span>
-                <span class="label">Live View</span>
-                <span class="description">Watch jokes in real-time</span>
-            </a>
-            
-            <a href="/docs" class="nav-button">
-                <span class="icon">📚</span>
-                <span class="label">API Docs</span>
-                <span class="description">Complete documentation</span>
-            </a>
-            
-            <a href="/test" class="nav-button">
-                <span class="icon">🧪</span>
-                <span class="label">Test Lab</span>
-                <span class="description">Hands-on API testing</span>
-            </a>
-        </div>
+            <div class="features">
+                <div class="feature-card">
+                    <span class="feature-icon">😂</span>
+                    <h3 class="feature-title">Jokes API</h3>
+                    <p class="feature-description">Real-time jokes with live updates, author filtering, and authentication support</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3 class="feature-title">User Management</h3>
+                    <p class="feature-description">Complete CRUD operations for user profiles with city filtering and status tracking</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🛍️</span>
+                    <h3 class="feature-title">Product Catalog</h3>
+                    <p class="feature-description">Inventory management with pricing, categories, and stock tracking features</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📋</span>
+                    <h3 class="feature-title">Task Management</h3>
+                    <p class="feature-description">Organize tasks with priorities, due dates, and completion tracking</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌤️</span>
+                    <h3 class="feature-title">Weather Data</h3>
+                    <p class="feature-description">Weather information by city with temperature, conditions, and humidity</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✍️</span>
+                    <h3 class="feature-title">Blog Posts</h3>
+                    <p class="feature-description">Content management with tagging, publishing, and author attribution</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎰</span>
+                    <h3 class="feature-title">Price Lottery</h3>
+                    <p class="feature-description">Random price generator with 0.1% jackpot chance - rate limited gaming experience</p>
+                </div>
+            </div>
 
-        <div class="api-info">
-            <h4>🔗 Quick API Access</h4>
-            <div class="endpoint">GET /jokes - Get all jokes</div>
-            <div class="endpoint">POST /advanced-joke - Create with auth</div>
-            <div class="endpoint">GET /events - Real-time updates (SSE)</div>
-        </div>
+            <div class="nav-buttons">
+                <a href="/view" class="nav-button">
+                    <span class="icon">👁️</span>
+                    <span class="label">Live Viewer</span>
+                    <span class="description">Watch real-time updates across all APIs</span>
+                </a>
+                
+                <a href="/docs" class="nav-button">
+                    <span class="icon">📚</span>
+                    <span class="label">Documentation</span>
+                    <span class="description">Complete API reference and examples</span>
+                </a>
+            </div>
 
-        <div class="footer">
-            <p>Built with ❤️ using Express.js, Bun, Prisma & PostgreSQL</p>
-            <p>Ready to share some laughs? <a href="/view">Start watching jokes →</a></p>
+            <div class="stats-section">
+                <h2 class="stats-title">🎯 Platform Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">APIs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Endpoints</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Possibilities</div>
+                    </div>
+                </div>
+                
+                <h4 style="color: #ffd700; margin-bottom: 20px; font-size: 1.3rem; text-align: center;">🔗 Popular Endpoints</h4>
+                <div class="endpoint">GET /api - Platform overview</div>
+                <div class="endpoint">GET /jokes - All jokes with filtering</div>
+                <div class="endpoint">GET /prices - Price lottery (1% jackpot!)</div>
+                <div class="endpoint">GET /users - User management</div>
+                <div class="endpoint">GET /products - Product catalog</div>
+                <div class="endpoint">GET /events - Real-time updates (SSE)</div>
+            </div>
+
+            <div class="footer">
+                <p>Built with ❤️ using Express.js, Bun, Prisma & PostgreSQL</p>
+                <p>Ready to explore? <a href="/api">Start with the API overview →</a></p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Add some interactive effects
         document.addEventListener('DOMContentLoaded', function() {
-            // Add hover effect to features
-            const features = document.querySelectorAll('.features li');
-            features.forEach((feature, index) => {
-                feature.style.animationDelay = `${index * 0.1}s`;
-                feature.style.animation = 'fadeInUp 0.6s ease forwards';
+            // Add staggered animation to feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
             });
 
-            // Add click tracking for buttons
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const label = this.querySelector('.label').textContent;
-                    console.log(`Navigating to: ${label}`);
+            // Add hover parallax effect to floating shapes
+            document.addEventListener('mousemove', (e) => {
+                const shapes = document.querySelectorAll('.shape');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                shapes.forEach((shape, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = mouseX * speed * 50;
+                    const y = mouseY * speed * 50;
+                    shape.style.transform = `translate(${x}px, ${y}px)`;
                 });
             });
-        });
 
-        // Add fadeInUp animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            // Add click tracking and smooth scrolling
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const label = this.querySelector('.label').textContent;
+                    console.log(`🚀 Navigating to: ${label}`);
+                    
+                    // Add click effect
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Animate stats on scroll into view
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const statNumbers = entry.target.querySelectorAll('.stat-number');
+                        statNumbers.forEach((statNumber, index) => {
+                            const finalValue = statNumber.textContent;
+                            statNumber.textContent = '0';
+                            
+                            setTimeout(() => {
+                                if (finalValue === '∞') {
+                                    statNumber.textContent = '∞';
+                                } else {
+                                    animateNumber(statNumber, parseInt(finalValue.replace('+', '')), finalValue.includes('+'));
+                                }
+                            }, index * 200);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) observer.observe(statsSection);
+
+            function animateNumber(element, target, hasPlus = false) {
+                let current = 0;
+                const increment = target / 30;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current) + (hasPlus ? '+' : '');
+                }, 50);
             }
-        `;
-        document.head.appendChild(style);
+
+            console.log('🎉 Multi-API Platform loaded successfully!');
+            console.log('🔥 Ready to explore 6 powerful APIs!');
+        });
     </script>
 </body>
 </html>

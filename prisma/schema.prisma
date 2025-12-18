@@ -31,15 +31,18 @@ model User {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   name        String
   description String?
   price       Float
   category    String
-  inStock     Boolean  @default(true)
-  quantity    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  inStock     Boolean        @default(true)
+  quantity    Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  priceHistory PriceHistory[]
+  challenges  Challenge[]
+  claims      Claim[]
 }
 
 model Task {
@@ -72,5 +75,41 @@ model Post {
   tags      String[] // Array of strings
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PriceHistory {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  price     Float
+  timestamp DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Challenge {
+  id          String   @id @default(cuid())
+  productId   Int
+  requestId   String   @unique
+  question    String
+  answer      String
+  hint        String?
+  difficulty  String   @default("medium") // easy, medium, hard
+  expiresAt   DateTime
+  claimed     Boolean  @default(false)
+  claimedBy   String?
+  createdAt   DateTime @default(now())
+  product     Product  @relation(fields: [productId], references: [id])
+  claims      Claim[]
+}
+
+model Claim {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  challengeId String
+  claimedBy   String
+  originalPrice Float
+  claimedPrice  Float
+  timestamp   DateTime @default(now())
+  product     Product  @relation(fields: [productId], references: [id])
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
 }
 
